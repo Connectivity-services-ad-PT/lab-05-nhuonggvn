@@ -22,3 +22,6 @@ npm-debug.log*
 # Newman reports
 reports/*.html
 reports/*.xml
+
+# Local IDE configs
+pyrefly.toml
