@@ -53,13 +53,22 @@ curl http://localhost:8000/health
 curl http://localhost:9000/health
 
 # DB readiness
-docker exec -it fit4110-db-lab05 pg_isready -U $POSTGRES_USER
-```
+docker exec -it fit4110-db-lab05 pg_isready -U lab05
 
-Bạn cũng có thể truy cập endpoint `/predict` của AI service để xem kết quả mẫu:
+Bạn cũng có thể truy cập endpoint `/predict` và `/detect` của AI service để xem kết quả mẫu:
 
 ```bash
 curl -X POST http://localhost:9000/predict
+curl -X POST http://localhost:9000/detect -H "Content-Type: application/json" -d '{"requestId": "0196fb3d-4ad7-7d1e-9f49-5d5148d2babc"}'
+```
+
+Để kiểm tra API Core Business:
+
+```bash
+curl -X POST http://localhost:8000/access/check \
+  -H "Authorization: Bearer local-dev-token" \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "0196fb3d-4ad7-7d1e-9f49-5d5148d2cafe", "cardId": "CARD-123456", "gateId": "GATE-01", "direction": "IN", "timestamp": "2026-06-01T10:00:00Z"}'
 ```
 
 ---

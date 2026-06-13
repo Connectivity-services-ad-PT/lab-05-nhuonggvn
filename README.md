@@ -61,28 +61,31 @@ Sau khi hoàn thành Lab 05, mỗi nhóm cần làm được:
 
 ```text
 FIT4110_lab05_docker_compose_readiness/
-├── README.md
-├── RUN_COMPOSE.md
-├── Dockerfile
-├── docker-compose.yml
-├── .dockerignore
-├── .env.example
-├── Makefile
-├── requirements.txt
-├── src/
-│   ├── iot_app/
-│   │   ├── __init__.py
-│   │   └── main.py
-│   └── ai_service/
-│       └── main.py
-├── contracts/
-│   └── iot-ingestion.openapi.yaml
-├── postman/
-│   └── environments/
-│       └── FIT4110_lab05_local.postman_environment.json
-├── checklists/
-│   └── readiness-checklist.md
-└── reports/
+    README.md
+    RUN_COMPOSE.md
+    Dockerfile
+    docker-compose.yml
+    .dockerignore
+    .env.example
+    Makefile
+    requirements.txt
+    src/
+        core_app/
+            __init__.py
+            main.py
+        ai_service/
+            main.py
+    contracts/
+        core-business.openapi.yaml
+        ai-vision.openapi.yaml
+    postman/
+        collections/
+            core-business.postman_collection.json
+        environments/
+            core-business_local.postman_environment.json
+    checklists/
+        readiness-checklist.md
+    reports/
 ```
 
 Thư mục `src/iot_app` chứa API FastAPI giống Lab 04. Thư mục `src/ai_service` chứa service AI mẫu (giả lập), cung cấp một endpoint `/predict` trả về kết quả dummy. Nhóm có thể thay bằng mô hình thực tế (YOLOv8, MediaPipe…).

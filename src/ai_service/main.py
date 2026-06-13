@@ -1,17 +1,6 @@
-"""
-Simple AI service mock for Lab 05.
-
-This service exposes two endpoints:
-
-* `GET /health` – returns status, service name and version.
-* `POST /predict` – returns a dummy list of detected objects and confidences.
-
-You can replace this file with your actual inference code (e.g. YOLOv8 model).
-"""
-
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 SERVICE_NAME = "ai-service"
 SERVICE_VERSION = "0.5.0"
@@ -28,6 +17,14 @@ class Prediction(BaseModel):
     confidence: List[float]
 
 
+class DetectionResponse(BaseModel):
+    detection_id: str
+    camera_id: str
+    label: str
+    confidence: float
+    risk_level: str
+
+
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok", "service": SERVICE_NAME, "version": SERVICE_VERSION}
@@ -35,8 +32,20 @@ def health() -> dict:
 
 @app.post("/predict", response_model=Prediction)
 def predict() -> Prediction:
-    # This dummy implementation always returns two objects
     return Prediction(objects=["person", "bicycle"], confidence=[0.98, 0.85])
+
+
+@app.post("/detect", response_model=DetectionResponse)
+def detect(payload: dict) -> DetectionResponse:
+    # Trả về cấu trúc DetectionResponse chuẩn xác theo hợp đồng ai-vision.openapi.yaml
+    camera_id = payload.get("camera_id", "CAM01")
+    return DetectionResponse(
+        detection_id="DET001",
+        camera_id=camera_id,
+        label="person",
+        confidence=0.91,
+        risk_level="medium"
+    )
 
 
 if __name__ == "__main__":
